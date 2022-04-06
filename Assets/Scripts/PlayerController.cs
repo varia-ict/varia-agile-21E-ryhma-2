@@ -18,17 +18,16 @@ public class PlayerController : MonoBehaviour
     private int intHorizontal;
 
     public bool isGrounded = false;
+    public bool isOnWall = false;
     public bool rollOnCooldown = false;
     public bool doubleJumpUsed = false;
     public bool dashOnCooldown = false;
-    public Animator playerAnim;
 
     private Rigidbody playerRb;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
-        playerAnim = GetComponent<Animator>();
         currentSpeed = speed;
     }
     // Update is called once per frame
@@ -36,32 +35,35 @@ public class PlayerController : MonoBehaviour
     {
         //Getting player inputs
         float horizontal = Input.GetAxis("Horizontal");
-        //Allows player movement
-        transform.Translate(Vector3.forward * horizontal * currentSpeed * Time.deltaTime);
-        //Allows player to jump is player is on the ground and plays the jump animation
+
+        //allows player movement and rotates the player character based on movement direction
+        Vector3 movementDirection = new Vector3(horizontal, 0, 0);
+        movementDirection.Normalize();
+        if (horizontal != 0)
+        {
+            transform.forward = movementDirection;
+            transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
+        }
+
+        //Allows player to jump is player is on the ground
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            playerAnim.Play("Unarmed-Jump");
         }
         // allows player to double jump once before setting the doubleJumpUsed boolean to true, preventing another jump in the air
         if (!isGrounded && !doubleJumpUsed && Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            playerAnim.Play("Unarmed-Jump-Flip");
             doubleJumpUsed = true;
-        } 
+        }
 
-        // plays the attack animation
-        if (isGrounded && Input.GetKeyDown(KeyCode.LeftAlt))
+        if (isOnWall && Input.GetKeyDown(KeyCode.Space))
         {
-            playerAnim.Play("Unarmed-Attack-L1");
-            playerAnim.Play("Unarmed-Run-Forward-Attack1-Right");
+
         }
         // causes the player to roll then activates the roll cooldown coroutine
         if (isGrounded && !rollOnCooldown && Input.GetKeyDown(KeyCode.LeftControl))
         {
-            playerAnim.Play("Unarmed-DiveRoll-Forward1");
             playerRb.AddForce(Vector3.right * speed, ForceMode.Impulse);
             StartCoroutine("RollCooldown");
         }
@@ -86,6 +88,7 @@ public class PlayerController : MonoBehaviour
                 isDashing = false;
             }
         }
+        // todo optimize this by makaing it a coroutine, use IENumerator and yield return new WaitForSeconds
         if (dashCooldown <= 0)
         {
             dashCooldown = 0;
@@ -121,6 +124,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator RollCooldown()
     {
+        // roll cooldown coroutine
         rollOnCooldown = true;
         yield return new WaitForSeconds(1);
         rollOnCooldown = false;
@@ -128,22 +132,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //checks if players on the ground and plays the landing animation if true
+        //checks if players on the ground
         if (collision.gameObject.CompareTag("Plane"))
         {
             isGrounded = true;
             doubleJumpUsed = false;
-            playerAnim.Play("Unarmed-Land");
+        }
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            isOnWall = true;
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        //checks if player is not on the ground and plays the falling animation if true
+        //checks if player is not on the ground
         if (collision.gameObject.CompareTag("Plane"))
         {
             isGrounded = false;
-            playerAnim.Play("Unarmed-Fall");
+        }
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            isOnWall = false;
         }
     }
 }
