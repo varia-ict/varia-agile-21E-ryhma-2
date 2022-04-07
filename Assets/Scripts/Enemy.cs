@@ -12,8 +12,11 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     private Rigidbody enemyRb;
     public bool playerInRange;
+    public bool enemyInvulnerable = false;
     public GameObject projectilePrefab;
     public Transform target;
+    public int enemyHealth = 5;
+    public int swordDamage = 1;
 
     private Vector3 offset = new Vector3(.1f, 1, 0);
 
@@ -34,9 +37,9 @@ public class Enemy : MonoBehaviour
             Invoke("spawnProjectile", 0);
 
             projectileTimer = 0;
-            
+
             transform.LookAt(player.transform.position, Vector3.forward);
-            
+
             var point = target.position;
             point.y = transform.position.y;
             transform.LookAt(point);
@@ -51,21 +54,42 @@ public class Enemy : MonoBehaviour
     //Checks if player is colliding with enemy attack range
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Player")
+        // checks if "Player" game object entered Enemy's box collider with the trigger on.
+        if (other.gameObject.name == "Player") 
         {
             playerInRange = true;
         }
     }
 
+    
     void OnTriggerExit(Collider other)
     {
+        // checks if "Player" game object exits Enemy's box collider with the trigger on.
         if (other.gameObject.name == "Player")
         {
             playerInRange = false;
         }
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        // checks if collides with Sword tagged object, removes sword damage amount of health, destroys if enemyHealth becomes 0
+        if (collision.gameObject.CompareTag("Sword") && !enemyInvulnerable)
+        {
+            enemyHealth = enemyHealth - swordDamage;
+            StartCoroutine(damageCooldown());
+            if (enemyHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+    IEnumerator damageCooldown()
+    {
+        enemyInvulnerable = true;
+        yield return new WaitForSeconds(1);
+        enemyInvulnerable = false;
+    }
     void spawnProjectile()
     {
         Instantiate(projectilePrefab, transform.position + offset, transform.rotation);

@@ -12,6 +12,7 @@ public class AnimatorController : MonoBehaviour
     private Animator playerAnim;
     public GameObject backKatana;
     public GameObject handKatana;
+    public GameObject swordHitbox;
 
     // Start is called before the first frame update
     void Start()
@@ -57,14 +58,16 @@ public class AnimatorController : MonoBehaviour
             if (isSheathed)
             {
                 playerAnim.Play("Unarmed-Jump-Flip");
+                doubleJumpUsed = true;
             }
             if (!isSheathed)
             {
                 playerAnim.Play("2Hand-Sword-Jump-Flip");
+                doubleJumpUsed = true;
             }
         }
         // plays the attack animation
-        if (isGrounded && Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
            
             if (isSheathed)
@@ -91,6 +94,7 @@ public class AnimatorController : MonoBehaviour
         if (collision.gameObject.CompareTag("Plane"))
         {
             isGrounded = true;
+            doubleJumpUsed = false;
             if (isSheathed)
             {
                 playerAnim.Play("Unarmed-Land");
@@ -108,7 +112,6 @@ public class AnimatorController : MonoBehaviour
         //checks if player is not on the ground and plays the falling animation if true
         if (collision.gameObject.CompareTag("Plane"))
         {
-            ;
             isGrounded = false;
             if (isSheathed)
             {

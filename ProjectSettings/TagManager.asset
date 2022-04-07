@@ -8,6 +8,8 @@ TagManager:
   - Collide
   - Enemy
   - Projectile
+  - Sword
+  - Range
   layers:
   - Default
   - TransparentFX

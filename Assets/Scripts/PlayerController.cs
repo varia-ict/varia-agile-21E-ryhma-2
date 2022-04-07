@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+
         // allows player to double jump once before setting the doubleJumpUsed boolean to true, preventing another jump in the air
         if (!isGrounded && !doubleJumpUsed && Input.GetKeyDown(KeyCode.Space))
         {
@@ -57,16 +58,13 @@ public class PlayerController : MonoBehaviour
             doubleJumpUsed = true;
         }
 
-        if (isOnWall && Input.GetKeyDown(KeyCode.Space))
-        {
-
-        }
         // causes the player to roll then activates the roll cooldown coroutine
         if (isGrounded && !rollOnCooldown && Input.GetKeyDown(KeyCode.LeftControl))
         {
             playerRb.AddForce(Vector3.right * speed, ForceMode.Impulse);
             StartCoroutine("RollCooldown");
         }
+
         // causes the player to dash if dash is not on cooldown
         if (Input.GetKeyDown(KeyCode.E) && horizontal != 0 && !dashOnCooldown)
         {
@@ -78,6 +76,7 @@ public class PlayerController : MonoBehaviour
             playerRb.velocity = Vector3.zero;
             currentDashTimer = startDashTimer;
         }
+
         //applies force to the players movement direction 
         if (isDashing)
         {
@@ -88,7 +87,8 @@ public class PlayerController : MonoBehaviour
                 isDashing = false;
             }
         }
-        // todo optimize this by makaing it a coroutine, use IENumerator and yield return new WaitForSeconds
+
+        // todo optimize this by making it a coroutine, use IENumerator and yield return new WaitForSeconds
         if (dashCooldown <= 0)
         {
             dashCooldown = 0;
@@ -101,21 +101,25 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
         //Increases players speed at sprintAccelarations value every frame if sprint is pressed and player is on the ground
         if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
         {
             currentSpeed += sprintAcceleration;
         }
+
         //Caps the players maximum sprintspeed at maxSpeeds value
         if (currentSpeed > maxSpeed)
         {
             currentSpeed = maxSpeed;
         }
+
         //When left shift is not pressed decreases players speed by the sprintAccelarations value everyframe
         if (!Input.GetKey(KeyCode.LeftShift))
         {
             currentSpeed -= sprintAcceleration;
         }
+
         //Caps the players minimum speed at speeds value
         if (currentSpeed < speed)
         {
@@ -138,10 +142,10 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             doubleJumpUsed = false;
         }
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            isOnWall = true;
-        }
+        //if (collision.gameObject.CompareTag("Wall"))
+        //{
+        //    isOnWall = true;
+        //}
     }
 
     private void OnCollisionExit(Collision collision)

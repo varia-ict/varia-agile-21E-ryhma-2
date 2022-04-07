@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 10.0f;
+    public float speed = 5.0f;
 
     private float range = 10f;
     private Vector3 startPos;
