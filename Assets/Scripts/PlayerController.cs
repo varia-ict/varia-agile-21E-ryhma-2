@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour
         rollOnCooldown = false;
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
         //checks if players on the ground
@@ -142,10 +143,6 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             doubleJumpUsed = false;
         }
-        //if (collision.gameObject.CompareTag("Wall"))
-        //{
-        //    isOnWall = true;
-        //}
     }
 
     private void OnCollisionExit(Collision collision)

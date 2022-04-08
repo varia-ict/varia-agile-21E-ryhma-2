@@ -4,7 +4,6 @@ public class AnimatorController : MonoBehaviour
 {
     //Variables
     public bool isGrounded = false;
-    public bool isOnWall = false;
     public bool rollOnCooldown = false;
     public bool doubleJumpUsed = false;
     public bool isSheathed = true;
@@ -69,7 +68,7 @@ public class AnimatorController : MonoBehaviour
         // plays the attack animation
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-           
+
             if (isSheathed)
             {
                 playerAnim.Play("Unarmed-Attack-L1");

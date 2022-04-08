@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         distance = Vector3.Distance(startPos, transform.position);
-        if( range < distance || distance < -range)
+        if (range < distance || distance < -range)
         {
             Destroy(gameObject);
         }

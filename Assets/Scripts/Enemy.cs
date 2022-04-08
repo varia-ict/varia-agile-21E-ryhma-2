@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
     }
 
-    //When player collides with enemy attack range, enemy attacks player   
     void Update()
     {
         if (playerInRange && projectileTimer >= projectileDelay)
@@ -55,13 +54,13 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // checks if "Player" game object entered Enemy's box collider with the trigger on.
-        if (other.gameObject.name == "Player") 
+        if (other.gameObject.name == "Player")
         {
             playerInRange = true;
         }
     }
 
-    
+
     void OnTriggerExit(Collider other)
     {
         // checks if "Player" game object exits Enemy's box collider with the trigger on.
