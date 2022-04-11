@@ -11,18 +11,19 @@ public class Enemy : MonoBehaviour
 
     private GameObject player;
     private Rigidbody enemyRb;
-    public bool playerInRange;
-    public bool enemyInvulnerable = false;
     public GameObject projectilePrefab;
     public Transform target;
-    public int enemyHealth = 5;
-    public int swordDamage = 1;
 
     private Vector3 offset = new Vector3(.1f, 1, 0);
 
     private float projectileDelay = 100;
     private float projectileTimer = Time.time;
 
+    public int Health = 5;
+    public int swordDamage = 1;
+
+    public bool playerInRange;
+    public bool enemyInvulnerable = false;
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
