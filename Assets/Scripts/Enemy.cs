@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     private float projectileDelay = 100;
     private float projectileTimer = Time.time;
 
-    public int Health = 5;
+    public int enemyHealth = 5;
     public int swordDamage = 1;
 
     public bool playerInRange;
