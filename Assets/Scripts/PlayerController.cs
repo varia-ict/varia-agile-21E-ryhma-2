@@ -13,16 +13,20 @@ public class PlayerController : MonoBehaviour
     public float dashCooldown = 0f;
     private bool isDashing;
     private int dashDirection;
+    public Vector3 offset = new Vector3(.1f, 1, 0);
     private float currentDashTimer;
     private float horizontal;
     private int intHorizontal;
 
+    public bool projectileOnCooldown = false;
     public bool isGrounded = false;
     public bool isOnWall = false;
     public bool rollOnCooldown = false;
     public bool doubleJumpUsed = false;
     public bool dashOnCooldown = false;
 
+    public AnimatorControllerScript animControlScript;
+    public GameObject projectilePrefab;
     private Rigidbody playerRb;
     // Start is called before the first frame update
     void Start()
@@ -75,6 +79,12 @@ public class PlayerController : MonoBehaviour
             dashDirection = intHorizontal;
             playerRb.velocity = Vector3.zero;
             currentDashTimer = startDashTimer;
+        }
+        // spawns a projectile
+        if (Input.GetKeyDown(KeyCode.LeftAlt) && animControlScript.isSheathed && !projectileOnCooldown)
+        {
+            Invoke("spawnProjectile", 0);
+            StartCoroutine(ProjectileCooldown());
         }
 
         //applies force to the players movement direction 
@@ -132,6 +142,18 @@ public class PlayerController : MonoBehaviour
         rollOnCooldown = true;
         yield return new WaitForSeconds(1);
         rollOnCooldown = false;
+    }
+
+    IEnumerator ProjectileCooldown()
+    {
+        // roll cooldown coroutine
+        projectileOnCooldown = true;
+        yield return new WaitForSeconds(0.7f);
+        projectileOnCooldown = false;
+    }
+    void spawnProjectile()
+    {
+        Instantiate(projectilePrefab, transform.position + offset, transform.rotation);
     }
 
 
