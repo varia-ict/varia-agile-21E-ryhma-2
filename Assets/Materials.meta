@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 9c229db046b18f642877b8fc14169a8d
+=======
+guid: 4b76cd67911228143a835fa76fb38868
+>>>>>>> moha/basicarea
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
