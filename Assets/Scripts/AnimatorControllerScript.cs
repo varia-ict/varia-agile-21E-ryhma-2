@@ -52,6 +52,13 @@ public class AnimatorControllerScript : MonoBehaviour
             backKatana.SetActive(false);
             isSheathed = false;
         }
+
+        // blocking feature that does not work yet
+        if (Input.GetKeyDown(KeyCode.Z))
+            playerAnim.SetBool("Blocking", true);
+        if (Input.GetKeyUp(KeyCode.Z))
+            playerAnim.SetBool("Blocking", false);
+
         // allows player to double jump once before setting the doubleJumpUsed boolean to true, preventing another jump in the air
         if (!isGrounded && !doubleJumpUsed && Input.GetKeyDown(KeyCode.Space))
         {
