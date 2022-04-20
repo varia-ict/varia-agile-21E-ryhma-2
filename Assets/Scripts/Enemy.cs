@@ -16,8 +16,9 @@ public class Enemy : MonoBehaviour
 
     private Vector3 offset = new Vector3(.1f, 1, 0);
 
-    private float projectileDelay = 100;
-    private float projectileTimer = Time.time;
+    //Projectile delay variables
+    public int projectileCooldown = 2;
+    public bool canShoot = true;
 
     public int enemyHealth = 5;
     public int swordDamage = 1;
@@ -32,23 +33,27 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && projectileTimer >= projectileDelay)
-        {
-            Invoke("spawnProjectile", 0);
-
-            projectileTimer = 0;
-
-            transform.LookAt(player.transform.position, Vector3.forward);
-
+        if (playerInRange) {
+            //Turns towards player position
             var point = target.position;
             point.y = transform.position.y;
             transform.LookAt(point);
         }
 
-        if (projectileTimer < projectileDelay)
+        if (canShoot && playerInRange)
         {
-            projectileTimer++;
+            spawnProjectile();
+            StartCoroutine(projectileDelay());
         }
+
+    }
+
+    //Controls enemy fire rate
+    IEnumerator projectileDelay()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(projectileCooldown);
+        canShoot = true;
     }
 
     //Checks if player is colliding with enemy attack range
@@ -93,10 +98,5 @@ public class Enemy : MonoBehaviour
     void spawnProjectile()
     {
         Instantiate(projectilePrefab, transform.position + offset, transform.rotation);
-        projectileTimer = Time.deltaTime;
-        if (projectileTimer >= projectileDelay)
-        {
-            projectileTimer = 0;
-        }
     }
 }
