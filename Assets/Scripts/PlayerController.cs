@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
     public AnimatorControllerScript animControlScript;
     public GameObject projectilePrefab;
     private Rigidbody playerRb;
+
+    public int health = 100;
+    public float duration = 4f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -155,6 +159,29 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(projectilePrefab, transform.position + offset, transform.rotation);
     }
+
+    IEnumerator HealthPower()
+    {
+        health += 100;
+        yield return new WaitForSeconds(duration);
+        if (health - 100 < 1) health = 1;
+        else health -= 100;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //checks if players on the ground
+        if (other.gameObject.CompareTag("HealthUp"))
+        {
+            Destroy(other.gameObject);
+            StartCoroutine(HealthPower());
+        }
+
+    }
+
+    
+
+
 
 
     private void OnCollisionEnter(Collision collision)
