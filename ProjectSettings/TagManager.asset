@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - Sword
   - Range
+  - HealthUp
   layers:
   - Default
   - TransparentFX
