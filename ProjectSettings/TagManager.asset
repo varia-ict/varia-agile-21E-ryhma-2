@@ -11,6 +11,8 @@ TagManager:
   - Sword
   - Range
   - HealthUp
+  - Shield
+  - Wall
   layers:
   - Default
   - TransparentFX

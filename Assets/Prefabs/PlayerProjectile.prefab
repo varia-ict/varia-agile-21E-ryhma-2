@@ -19317,9 +19317,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7334613327133997314}
-  - component: {fileID: 1586482620}
   - component: {fileID: -3160818537138710923}
   - component: {fileID: -7517933408399571929}
+  - component: {fileID: -7136469345179554732}
   m_Layer: 0
   m_Name: PlayerProjectile
   m_TagString: Sword
@@ -19345,19 +19345,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1586482620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7334613327133997315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eda52733338d66a40be35e38d5cfda69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 20
 --- !u!135 &-3160818537138710923
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -19387,3 +19374,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-7136469345179554732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334613327133997315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1adffc7336b0df46bf9e8d3f47e515d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  playerProjectileDamage: 25

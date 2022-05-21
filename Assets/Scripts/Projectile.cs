@@ -12,7 +12,8 @@ public class Projectile : MonoBehaviour
     private Rigidbody playerRb;
 
     private GameObject player;
-
+    public int projectileDamage = 25;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +31,17 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Shield"))
+        {
+            Destroy(gameObject);
+        }
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+            Debug.Log("hit player");
+        }
     }
 }

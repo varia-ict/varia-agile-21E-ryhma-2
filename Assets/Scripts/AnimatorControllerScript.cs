@@ -12,6 +12,7 @@ public class AnimatorControllerScript : MonoBehaviour
     public GameObject backKatana;
     public GameObject handKatana;
     public GameObject swordHitbox;
+   
     public PlayerController playerControllerScript;
     Vector3 velocity = Vector3.zero;
     // Start is called before the first frame update
@@ -53,11 +54,7 @@ public class AnimatorControllerScript : MonoBehaviour
             isSheathed = false;
         }
 
-        // blocking feature that does not work yet
-        if (Input.GetKeyDown(KeyCode.Z))
-            playerAnim.SetBool("Blocking", true);
-        if (Input.GetKeyUp(KeyCode.Z))
-            playerAnim.SetBool("Blocking", false);
+        
 
         // allows player to double jump once before setting the doubleJumpUsed boolean to true, preventing another jump in the air
         if (!isGrounded && !doubleJumpUsed && Input.GetKeyDown(KeyCode.Space))
