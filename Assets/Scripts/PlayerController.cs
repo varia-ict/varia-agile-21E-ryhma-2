@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             doubleJumpUsed = true;
+            isDoubleJumping = true;
         }
 
         // causes the player to roll then activates the roll cooldown coroutine
