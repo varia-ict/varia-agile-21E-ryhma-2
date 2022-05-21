@@ -11,8 +11,12 @@ TagManager:
   - Sword
   - Range
   - HealthUp
+<<<<<<< HEAD
   - Shield
   - Wall
+=======
+  - GM
+>>>>>>> abhi_21_04_2022
   layers:
   - Default
   - TransparentFX
