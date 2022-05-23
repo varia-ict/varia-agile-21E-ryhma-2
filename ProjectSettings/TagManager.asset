@@ -3,20 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Plane
-  - Collide
-  - Enemy
-  - Projectile
-  - Sword
-  - Range
-  - HealthUp
-<<<<<<< HEAD
-  - Shield
-  - Wall
-=======
-  - GM
->>>>>>> abhi_21_04_2022
+  tags: []
   layers:
   - Default
   - TransparentFX
