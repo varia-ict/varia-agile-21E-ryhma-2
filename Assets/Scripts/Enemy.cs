@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     private Rigidbody enemyRb;
     public GameObject projectilePrefab;
-    public Transform target;
+    private Transform target;
 
     private Vector3 offset = new Vector3(.1f, 1, 0);
 
@@ -21,18 +21,28 @@ public class Enemy : MonoBehaviour
     public bool canShoot = true;
 
     public int enemyHealth = 5;
-    public int swordDamage = 1;
+    public int swordDamage = 5;
 
     public bool playerInRange;
     public bool enemyInvulnerable = false;
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
+        target = player.transform;
     }
 
     void Update()
     {
+        //  Check if there is a player gameObject and assign it if not.
+        if (!player)
+        {
+            //player = GameObject.Find("Player");
+            player = GameObject.FindGameObjectWithTag("Player");
+            target = player.transform;
+        }
+
+
         if (playerInRange) {
             //Turns towards player position
             var point = target.position;
@@ -48,7 +58,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    //Controls enemy fire rate
+    //  Controls enemy fire rate
     IEnumerator projectileDelay()
     {
         canShoot = false;
@@ -56,7 +66,8 @@ public class Enemy : MonoBehaviour
         canShoot = true;
     }
 
-    //Checks if player is colliding with enemy attack range
+    /// Triggers
+    //  Checks if player is colliding with enemy attack range
     void OnTriggerEnter(Collider other)
     {
         // checks if "Player" game object entered Enemy's box collider with the trigger on.
@@ -76,6 +87,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+    /// Collisions
     private void OnCollisionEnter(Collision collision)
     {
         // checks if collides with Sword tagged object, removes sword damage amount of health, destroys if enemyHealth becomes 0
@@ -89,12 +102,18 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+
+    /// Cooldown
     IEnumerator damageCooldown()
     {
         enemyInvulnerable = true;
         yield return new WaitForSeconds(1);
         enemyInvulnerable = false;
     }
+
+
+    /// Triggers
     void spawnProjectile()
     {
         Instantiate(projectilePrefab, transform.position + offset, transform.rotation);

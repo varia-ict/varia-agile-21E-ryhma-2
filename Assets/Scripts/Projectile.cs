@@ -4,44 +4,40 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 5.0f;
+    private GameManager gameManager;
 
+    public float speed = 5.0f;
     private float range = 10f;
     private Vector3 startPos;
     private float distance;
-    private Rigidbody playerRb;
+    public float projectileDamage = 25f;
 
-    private GameObject player;
-    public int projectileDamage = 25;
-    
     // Start is called before the first frame update
     void Start()
     {
+        //gameManager = GameObject.Find("GameObject").GetComponent<GameManager>();
         startPos = transform.position;
-        playerRb = GetComponent<Rigidbody>();
-        player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //  Calculate distance traveled
         distance = Vector3.Distance(startPos, transform.position);
+        //  if distance is greather than range limit then destroy self
         if (range < distance || distance < -range)
         {
             Destroy(gameObject);
         }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("Shield"))
+        
+        if (collision.gameObject.CompareTag("Player"))
         {
+            //  Reduce player Health
+            collision.gameObject.GetComponent<PlayerController>().health -= projectileDamage/* * gameManager.difficulty*/;
             Destroy(gameObject);
-        }
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-            Debug.Log("hit player");
         }
     }
 }

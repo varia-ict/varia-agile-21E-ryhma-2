@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
     void Update()
     { 
 
-        GameObject Player = GameObject.Find("Player");
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
         PlayerController playerScript = Player.GetComponent<PlayerController>();
         //if the player is on the ground and presses space play the jumping audio
         if (playerScript.isGrounded && Input.GetKeyDown(KeyCode.Space))

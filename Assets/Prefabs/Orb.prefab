@@ -19357,6 +19357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  projectileDamage: 25
 --- !u!135 &-3160818537138710923
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -19365,7 +19366,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7334613327133997315}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.7941841

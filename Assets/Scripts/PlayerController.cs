@@ -39,8 +39,7 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     private Rigidbody playerRb;
 
-    public int health = 100;
-    public int shieldHealth = 100;
+    public float health = 100f;
     public float duration = 4f;
 
     // Start is called before the first frame update
@@ -53,7 +52,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
        
-        //if space is pressed when touching walljumpable wall start wall jumping to the direction of the raycasts hits normal reflection
+        //  if space is pressed when touching walljumpable wall
+        //  then start wall jumping to the direction of the raycasts hits normal reflection
         if (Input.GetKeyDown(KeyCode.Space) && canWallJump && !isGrounded)
         {
             StartCoroutine("MidWallJump");
@@ -141,6 +141,7 @@ public class PlayerController : MonoBehaviour
             dashCooldown -= Time.deltaTime;
         }
     }
+
     private void FixedUpdate()
     {
         //Getting player inputs
@@ -210,13 +211,10 @@ public class PlayerController : MonoBehaviour
         else
             playerRb.drag = 0;
     }
-    IEnumerator MidWallJump()
-    {
-        //walljump timer corountine
-        midWallJump = true;
-        yield return new WaitForSeconds(0.6f);
-        midWallJump = false;
-    }
+
+
+
+    /// Cooldowns
     IEnumerator RollCooldown()
     {
         // roll cooldown coroutine
@@ -240,6 +238,8 @@ public class PlayerController : MonoBehaviour
         projectileOnCooldown = false;
     }
 
+
+    /// Abilities and Powerups
     IEnumerator HealthPower()
     {
         health += 100;
@@ -252,8 +252,17 @@ public class PlayerController : MonoBehaviour
         Instantiate(projectilePrefab, transform.position + offset, transform.rotation);
     }
 
-    
+    IEnumerator MidWallJump()
+    {
+        //walljump timer corountine
+        midWallJump = true;
+        yield return new WaitForSeconds(0.6f);
+        midWallJump = false;
+    }
 
+
+
+    /// Triggers
     private void OnTriggerEnter(Collider other)
     {
         //checks if players on the ground
@@ -262,10 +271,6 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             StartCoroutine(HealthPower());
         }
-        if (other.gameObject.CompareTag("Projectile"))
-        {
-            health = health - other.gameObject.GetComponent<Projectile>().projectileDamage;
-        }
     }
 
 
@@ -273,6 +278,7 @@ public class PlayerController : MonoBehaviour
 
 
 
+    /// Collissions
     private void OnCollisionEnter(Collision collision)
     {
         //checks if players on the ground

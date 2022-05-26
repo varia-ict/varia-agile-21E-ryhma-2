@@ -331,10 +331,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  projectilePrefab: {fileID: 7334613327133997315, guid: c90e848c38182c147b02848a0d501ec7, type: 3}
+  projectileCooldown: 2
+  canShoot: 1
+  enemyHealth: 5
+  swordDamage: 1
   playerInRange: 0
-  projectilePrefab: {fileID: 529019146462695948, guid: a159a2f1e1f121741b63f2f540c2aca7, type: 3}
-  target: {fileID: 0}
-  projectileTimer: 0
+  enemyInvulnerable: 0
 --- !u!1 &1977734742730027805
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +388,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 75f6f11c806810340800c866dba8155b, type: 2}
+  - {fileID: 2100000, guid: ad8c2bee857aaca4dbcf348b7e988a44, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -467,8 +470,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 1977734742729600705}
   m_AABB:
-    m_Center: {x: 0.021910757, y: 0.00000020861626, z: 0.038551383}
-    m_Extent: {x: 0.96946156, y: 0.90274227, z: 0.23576081}
+    m_Center: {x: 0.021910787, y: -0.03244009, z: 0.03855139}
+    m_Extent: {x: 0.96946156, y: 0.25404468, z: 0.23576081}
   m_DirtyAABB: 0
 --- !u!1 &5610061798777081601
 GameObject:
